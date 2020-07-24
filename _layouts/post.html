@@ -1,52 +1,103 @@
-<!DOCTYPE html>
-<html lang="en">
-  {% include head.html %}
-  <body>
-  {% include header.html %}
-  <section id="content">
-    <div class="container m-t-lg m-b-lg">
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="blog-post">
-          <!-- Begin Post -->
-            <div class="post-item">
-              <div class="caption wrapper-lg">
-                <h2 class="post-title">{{ page.title }}</h2>
-                <div class="progress progress-xxs m-t-sm">
-                  <div class="progress-bar progress-bar-success" data-toggle="tooltip" style="width: 100%"></div>
-                </div>
-                <div class="post-sum">
-                  {{ content }}
-                </div>
-
-                <section class="panel panel-default">
-                  <div class="panel-body">
-                    <a href="https://github.com/{{ site.github_username }}" class="thumb pull-right m-l">
-                      <img src="/assets/images/avatar.jpg" class="img-circle">
-                    </a>
-                    <div class="clear">
-                      <p>
-                        <small class="block text-muted">
-                          如果觉得我的文章对您有用，请在支付宝公益平台找个项目捐点钱。
-
-                          {% if page.author %}<a href="https://github.com/{{ site.github_username }}" class="text-info">@{{ page.author }} <i class="icon-twitter"></i></a>{% endif %}
-
-                          <i class="fa fa-clock-o icon-muted"></i> {{ page.date | date: "%b %-d, %Y" }}
-
-                          {% if page.meta %}<a href="#" class="m-l-sm"><i class="fa fa-comment-o icon-muted"></i> {{ page.meta }}{% endif %}
-                        </small>
-                      </p>
-                      <a href="https://love.alipay.com/donate/index.htm" class="btn btn-s-md btn-success btn-rounded">奉献爱心</a>
-                    </div>
-                  </div>
-                </section>
-              </div>
-            </div>
-          <!-- End Post -->
+---
+layout: default
+---
+<div class="row">
+    <div class="content col-lg-9">
+        <div class="sheet post">
+          <header>
+            <h2>{{ page.title }}</h2>
+            <p class="post-meta">
+                <span class="octicon octicon-clock"></span> {{ page.date | date: "%b %-d, %Y" }}{% if page.author %} • {{ page.author }}{% endif %}{% if page.meta %} • {{ page.meta }}{% endif %}
+            </p>
+            <p class="post-tag">
+                <span>{% for cat in page.categories %}<a href="{{ '/category' | prepend: site.baseurl | prepend: site.url }}/#{{ cat }}"><span class="octicon octicon-list-unordered"></span>&nbsp;{{ cat }}</a>{% endfor %}</span>
+                <span>{% for tag in page.tags %}
+                    <a class="word-keep" href="{{ '/tags' | prepend: site.baseurl | prepend: site.url }}/#{{ tag }}"><span class="octicon octicon-tag"></span>&nbsp;{{ tag }}</a>
+                    {% endfor %}
+                </span>
+            </p>
+          </header>
+          <hr class="boundary">
+          <article>
+            {{content}}
+          </article>
+          <hr class="boundary">
+          <div id="post-share" class="bdsharebuttonbox">
+              <a href="#" class="bds_more" data-cmd="more"></a>
+              <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+              <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+              <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+              <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+              <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
           </div>
+        </div>
+        <div class="pad-min"></div>
+        <div id="post-comment" class="sheet post hidden">
+            <div id="disqus_thread"></div>
+        </div>
+    </div>
+    <div class="content-navigation col-lg-3">
+      <div class="shadow-bottom-center" >
+        <div class="content-navigation-toc">
+            <div class="content-navigation-header">
+                <span class="octicon octicon-list-unordered"></span>&nbsp;Toc
+            </div>
+            <div class="content-navigation-list toc"></div>
+        </div>
+        <div class="content-navigation-tag">
+            <div class="content-navigation-header">
+                <span class="octicon octicon-list-unordered"></span>&nbsp;Tags
+            </div>
+            <div class="content-navigation-list">
+                <ul>
+                    {% for tag in page.tags %}
+                    <li>
+                        <a href="{{ '/tags' | prepend: site.baseurl | prepend: site.url }}#{{ tag }}"><span class="octicon octicon-tag"></span>&nbsp;{{ tag }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="content-navigation-related">
+            <div class="content-navigation-header">
+                <span class="octicon octicon-list-unordered"></span>&nbsp;Related
+            </div>
+            <div class="content-navigation-list">
+                <ul>
+                    {% assign postsAfterFilter = '-' | split: "-" %}
+
+                    {% for p in site.posts %}
+                        {%if p.url != page.url %}
+                            {% assign commonTagCount = 0 %}
+
+                            {% for tag in p.tags %}
+                                {% if page.tags contains tag %}
+                                    {% assign commonTagCount = commonTagCount | plus: 1 %}
+                                {% endif %}
+                            {% endfor %}
+
+                            {% for cat in p.categories %}
+                                {% if page.categories contains cat %}
+                                    {% assign commonTagCount = commonTagCount | plus: 1 %}
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if commonTagCount > 0 %}
+                                {% assign postsAfterFilter = postsAfterFilter | push: p %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if postsAfterFilter.size > 0 %}
+                        {% for p in postsAfterFilter limit: 15 %}
+                            <li>
+                                <a href="{{ p.url | prepend: site.baseurl | prepend: site.url }}">{{ p.title }}</a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
         </div>
       </div>
     </div>
-  </section>
-  </body>
-</html>
+</div>

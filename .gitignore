@@ -1,7 +1,6 @@
 _site
-.tags
-.ruby-gemset
-.ruby-version
-.DS_Store
 .sass-cache
-.jekyll-metadata
+.idea
+.local
+.local/*
+.jekyll-cache

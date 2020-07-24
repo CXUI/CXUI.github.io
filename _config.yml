@@ -1,24 +1,48 @@
-# Site settings
-title: "CXH"
-email: wjp2013@gmail.com
-baseurl: "" # the subpath of your site, e.g. /blog/
-url: "https://CXUI.github.io/" # the base hostname & protocol for your site
-github_username: wjp2013
+plugins: [jekyll-paginate]
 
-timezone: Beijing
-plugins:
-  - jekyll-feed
-  - jekyll-paginate
-
-# Build settings
-highlighter: rouge
 permalink: /:categories/:title/
 
+highlighter: rouge
 markdown: kramdown
-# markdown: redcarpet
-redcarpet:
-  extensions: ['fenced_code_blocks', 'tables']
+kramdown:
+  input:  GFM
+  syntax_highlighter: rouge
 
-paginate: 25
 
-github: [metadata]
+paginate: 10
+paginate_path: "page/:num"
+baseurl: ""
+
+
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      styles : [highlight.css,gitment.css,post.css]
+      scripts : [gitment.js, post.js]
+
+
+
+title: "bit-ranger"
+email: sincerebravefight@gmail.com
+description: ""
+github:
+  username: bit-ranger
+swiftype:
+  searchId: iXZyPokVfxFaBTvi64Y6
+gitment:
+    repo: blog
+    client_id: a6fb73b3e790e234bab8
+    client_secret: cc10aaff53a03d05ab2ee002dbf401dd7627c7a3
+
+url: "https://CXUI.github.io"
+imgrepo: "https://bit-ranger.github.io/blog/static/img"
+
+
+#url: "http://127.0.0.1:4000"
+#imgrepo: "http://127.0.0.1:4000/static/img"
+
