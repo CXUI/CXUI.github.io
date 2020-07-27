@@ -9,9 +9,7 @@ grammar_cjkRuby: true
 
 
 ```
-    /*
-     * 弹出系统音量控制器
-     * */
+    //弹出系统音量控制器
     public static void PopupController()
     {
         System.Diagnostics.ProcessStartInfo Info = new System.Diagnostics.ProcessStartInfo();
