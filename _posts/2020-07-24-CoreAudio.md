@@ -6,7 +6,8 @@ categories: common
 renderNumberedHeading: true
 grammar_cjkRuby: true
 ---
-更改系统的音量
+更改系统的音量，此方式在VS中正常运行，在unity中运行错误，错误类型：`Cannot cast from source type to destination type.`
+
 ```
 using System;
 using System.Runtime.InteropServices;
