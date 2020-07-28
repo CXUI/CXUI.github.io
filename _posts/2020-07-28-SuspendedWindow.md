@@ -1,7 +1,7 @@
 ---
 layout: post
 title: UI 悬浮
-tags: 新建,模板,小书匠
+tags: Unity UI C#
 categories: common
 renderNumberedHeading: true
 grammar_cjkRuby: true
